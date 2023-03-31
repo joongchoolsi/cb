@@ -18,6 +18,8 @@ fun main() {
     val inputRaw: String = input
 
     input = input.replace("!", "")
+    val r = Regex(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*")
+    
 
     if ((input.elementAt(0).code in 65..122) && input.contains("뜻") && (input.endsWith("?") || input.endsWith("야"))) {
         val eng: String = english(input)
@@ -26,7 +28,7 @@ fun main() {
         else println("'${eng}'의 뜻은 '" + translate(eng, "en", "ko") + "'입니다.")
 
     } else if(input.contains("한국어로") && (input.contains("뭐") || input.endsWith("?"))) {
-        val r = Regex(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*")
+        
         var tr: String = ""
         for(i in 0..input.length) {
             if(input.elementAt(i).toString().matches(r)) {
@@ -47,6 +49,36 @@ fun main() {
         throw NullPointerException("오류가 발생했습니다: null인 개체를 참조할 수 없습니다.")
     } else if(((input.contains("여자친구") || input.contains("여친")) && (input.endsWith("생길까") || input.endsWith("생길까?") || input.contains("생기면") || input.contains("생긴") || input.contains("생겨"))) && !input.contains("못생")) {
         throw IllegalArgumentException("Invalid verb; 동사 '생기다'는 이 문장에서 허용되지 않습니다.")
+    }
+
+    else if(input.endsWith("어로 뭐야?") || input.endsWith("어로 뭐야")) {
+        input = if(input.endsWith("?")) input.substring(0, input.length-6)
+        else input.substring(0, input.length-5)
+        var i = input.length
+
+        var lan: String = ""
+        while(true) {
+            if(input.elementAt(i).equals(" ")) {
+                break
+            } else {
+                lan += input.elementAt(i)
+                i--
+            }
+        }
+
+        var tr: String = ""
+        for(i in 0..input.length) {
+            if(input.elementAt(i).toString().matches(r)) {
+                break;
+            } else {
+                tr += input.elementAt(i)
+            }
+        }
+        
+
+        lan = lan.replace("한국어", "ko").replace("영어", "en").replace("일본어", "ja")
+
+        
     }
 
 
