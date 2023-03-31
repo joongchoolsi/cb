@@ -19,7 +19,7 @@ fun main() {
 
     input = input.replace("!", "")
     val r = Regex(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*")
-    
+
 
     if ((input.elementAt(0).code in 65..122) && input.contains("뜻") && (input.endsWith("?") || input.endsWith("야"))) {
         val eng: String = english(input)
@@ -28,7 +28,7 @@ fun main() {
         else println("'${eng}'의 뜻은 '" + translate(eng, "en", "ko") + "'입니다.")
 
     } else if(input.contains("한국어로") && (input.contains("뭐") || input.endsWith("?"))) {
-        
+
         var tr: String = ""
         for(i in 0..input.length) {
             if(input.elementAt(i).toString().matches(r)) {
@@ -75,10 +75,14 @@ fun main() {
             }
         }
         
+        val output: String = translate(tr, lan, Test.main(tr))
+
+        println(output)
+
 
         lan = lan.replace("한국어", "ko").replace("영어", "en").replace("일본어", "ja")
 
-        
+
     }
 
 
